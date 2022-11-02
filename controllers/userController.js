@@ -20,8 +20,7 @@ module.exports.registerUser = (reqBody) => {
         lastName : reqBody.lastName,
         email : reqBody.email,
         mobileNo : reqBody.mobileNo,
-        password : bcrypt.hashSync(reqBody.password, 10),
-        isAdmin : reqBody.isAdmin
+        password : bcrypt.hashSync(reqBody.password, 10)
     })
     return newUser.save().then((user, error) => {
         if(error){
