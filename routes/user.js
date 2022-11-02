@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User.js")
-const userController = require("../controllers/userController")
+const User = require("../models/User.js");
+const userController = require("../controllers/userController");
+const auth = require ("../auth")
 
 // all http method located
 
@@ -21,9 +22,15 @@ router.post("/login", (req, res) => {
 
 
 // s38 Act.
-router.post("/details", (req, res) => {
-    userController.getProfile({userId : req.body.id}).then(resultFromController => res.send(resultFromController));    
+router.post("/details", auth.verify, (req, res) => {
+    // we can get the token by accessing req.headers.authorization
+    const userData = auth.decode(req.headers.authorization)
+
+    userController.getProfile({userId : userData.id}).then(resultFromController => res.send(resultFromController));    
 })
 
+router.get("/allUsers", (req, res) => {
+	userController.getAllUsers().then(resultFromController => res.send(resultFromController));
+})
 
 module.exports = router;

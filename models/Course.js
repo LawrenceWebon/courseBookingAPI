@@ -13,6 +13,10 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Price is Required!"]
     },
+    isAdmin: {
+        type: Boolean,
+        default: true
+    },
     isActive: {
         type: Boolean,
         default: true

@@ -5,10 +5,11 @@ const auth = require("../auth");
 module.exports.checkEmailExists = (reqBody) => {
     return User.find({email : reqBody.email}).then(result => {
         if(result.length > 0){
-            return true; // "The email is already exist."
+            return "This login email already registered." 
+// "The email is already exist."
 
         }else{
-            return false;
+            return "Register Now!";
         }
     })
 }
@@ -19,13 +20,14 @@ module.exports.registerUser = (reqBody) => {
         lastName : reqBody.lastName,
         email : reqBody.email,
         mobileNo : reqBody.mobileNo,
-        password : bcrypt.hashSync(reqBody.password, 10)
+        password : bcrypt.hashSync(reqBody.password, 10),
+        isAdmin : reqBody.isAdmin
     })
     return newUser.save().then((user, error) => {
         if(error){
-            return false; //"Error"
+            return "Invalid Registration."; //"Error"
         }else{
-            return true; //"Congratulation"
+            return "Registration Successful!"; //"Congratulation"
         }
     })
 }
@@ -49,4 +51,10 @@ module.exports.getProfile = (data) => {
     return User.findById(data.userId).then(result => {
         return result;
     })
+}
+
+module.exports.getAllUsers = () => {
+	return User.find({}).then(result => {
+		return result;
+	});
 }
