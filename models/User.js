@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         required: [true, "Mobile number is Required!"]
     },
     enrollments: [{
-        courseid: {
+        courseId: {
             type: String,
             required: [true, "Course ID is required!"]
         },
